@@ -15,14 +15,23 @@
 (defn new-review-id []
   (wcar* (car/incr "new_review_id")))
 
+(defn normalize
+  [review]
+  {:reviewer (:reviewer review)
+   :rating (Integer. (:rating review))
+   :review (str (:review review))
+   :date-added (str (new java.util.Date))
+   })
+
 (defn add-review!
   [barcode new-review]
   (let [review-id (str "review:" (new-review-id))
-        review (coerce! Review new-review)
+        review-map (coerce! Review new-review)
+        review (normalize review-map)
         item-key (str "list:item:" barcode)]
     (wcar* (car/hmset review-id 
                       "reviewer" (:reviewer review)
-                      "rating" (:rating review)
+                      "rating" (Integer. (:rating review))
                       "review" (:review review)))
     (wcar* (car/lpush item-key review-id))
     review-id
