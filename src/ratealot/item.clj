@@ -6,6 +6,7 @@
 (s/defschema Item {:barcode String
                    :name String
                    :description String
+                   :reviews [Review]
                    })
 
 (defonce items (atom (array-map)))
@@ -13,11 +14,12 @@
 (defn get-item
   "Get an item by barcode. If it doesn't exist, return nil"
   [barcode]
-  (@items barcode)
-  )
+  (:barcode @items barcode))
 
 (defn add! [new-item]
-  (coerce! Item new-item))
+  (let [item (coerce! Item new-item)]
+    (swap! items conj item)
+    item))
 
 (when (empty? @items)
-  (add! {:barcode "abc123" :name "Camel Filter" :description "Toasted lekker cigs"}))
+  (add! {:barcode "abc123" :name "Camel Filter" :description "Toasted lekker cigs" :reviews '[]}))
