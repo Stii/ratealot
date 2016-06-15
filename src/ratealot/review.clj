@@ -34,7 +34,7 @@
                       "rating" (Integer. (:rating review))
                       "review" (:review review)))
     (wcar* (car/lpush item-key review-id))
-    review-id
+    barcode
     ))
 
 (defn get-review-ids

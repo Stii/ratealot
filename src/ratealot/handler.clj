@@ -2,7 +2,8 @@
   (:require [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
             [schema.core :as s]
-            [ratealot.item :refer :all]))
+            [ratealot.item :refer :all]
+            [ratealot.review :refer :all]))
 
 (defapi app
     {:swagger
@@ -24,13 +25,18 @@
             :body [item Item]
             :path-params [barcode :- String]
             :summary "Adds a new item"
-            (ok (add! item)
-            ))
+            (ok (add! item)))
       
       (PUT "/:barcode" []
            :return Item
            :body [review Review]
            :path-params [barcode :- String]
            :summary "Adds a review to an item"
-           (ok (add-review! barcode review)))
-      ))
+           (ok (get-item (add-review! barcode review))))
+
+      (GET "/:barcode/aggregate" []
+           :return Aggregate
+           :path-params [barcode :- String]
+           :summary "Get the average rating for an item"
+           (ok (aggregate (get-reviews barcode))))))
+
