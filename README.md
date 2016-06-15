@@ -1,6 +1,6 @@
 # ratealot
 
-FIXME
+A ratings and reviews API built in Clojure
 
 ## Usage
 
@@ -19,6 +19,3 @@ java -jar target/server.jar
 
 `lein ring uberwar`
 
-## License
-
-Copyright ©  FIXME
