@@ -37,6 +37,7 @@
         [barcode name description]  item-value ]
     {:barcode barcode :name name :description description}))
 
+<<<<<<< HEAD
 (defn add! [new-item]
   (let [item (coerce! Item new-item)
         barcode (:barcode new-item)
@@ -58,3 +59,18 @@
 (keys Item)
   
   )
+=======
+(defn add!
+  "Add a new item."
+  [new-item]
+  (let [item (coerce! Item new-item)]
+    (swap! items conj item)
+    item))
+
+(defn add-review!
+  "Add a review for an item by barcode"
+  [barcode review]
+  )
+(when (empty? @items)
+  (add! {:barcode "abc123" :name "Camel Filter" :description "Toasted lekker cigs" :reviews '[]}))
+>>>>>>> add reviews function

@@ -14,7 +14,23 @@
       :tags ["api"]
 
       (GET "/:barcode" []
-        :return Item
-        :path-params [barcode :- String]
-        :summary "Gets a item by barcode"
-        (ok (get-item barcode)))))
+           :return Item
+           :path-params [barcode :- String]
+           :summary "Gets a item by barcode"
+           (ok (get-item barcode)))
+
+      (POST "/:barcode" []
+            :return Item
+            :body [item Item]
+            :path-params [barcode :- String]
+            :summary "Adds a new item"
+            (ok (add! item)
+            ))
+      
+      (PUT "/:barcode" []
+           :return Item
+           :body [review Review]
+           :path-params [barcode :- String]
+           :summary "Adds a review to an item"
+           (ok (add-review! barcode review)))
+      ))
