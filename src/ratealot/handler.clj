@@ -1,28 +1,23 @@
 (ns ratealot.handler
   (:require [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
-            [schema.core :as s]))
-
-(s/defschema Pizza
-  {:name s/Str
-   (s/optional-key :description) s/Str
-   :size (s/enum :L :M :S)
-   :origin {:country (s/enum :FI :PO)
-            :city s/Str}})
+            [schema.core :as s]
+            [ratealot.item :refer :all]
+            [ratealot.review :refer :all]))
 
 (def app
   (api
     {:swagger
-     {:ui "/"
+     {:ui "/doc"
       :spec "/swagger.json"
       :data {:info {:title "Ratealot"
-                    :description "Compojure Api example"}
-             :tags [{:name "api", :description "some apis"}]}}}
+                    :description "Compojure Api for doing reviews and ratings. alot"}
+             :tags [{:name "api", :description "ratings api"}]}}}
 
     (context "/api" []
       :tags ["api"]
 
-      (GET "/plus" []
+      (GET "/:barcode" []
         :return {:result Long}
         :query-params [x :- Long, y :- Long]
         :summary "adds two numbers together"

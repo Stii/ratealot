@@ -4,5 +4,7 @@
 
 (def Score (s/enum 1 2 3 4 5))
 
-(s/defschema Review {
-})
+(s/defschema Review {:reviewer String
+                     :rating Integer
+                     :review String
+                     :date-added String})
