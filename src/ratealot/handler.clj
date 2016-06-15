@@ -15,5 +15,6 @@
 
       (GET "/:barcode" []
         :return Item
+        :path-params [barcode :- String]
         :summary "Gets a item by barcode"
         (ok (get-item barcode)))))
