@@ -15,6 +15,5 @@
 
       (GET "/:barcode" []
         :return Item
-        :query-params [barcode :- String]
         :summary "Gets a item by barcode"
         (ok (get-item barcode)))))
