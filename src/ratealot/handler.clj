@@ -2,23 +2,19 @@
   (:require [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
             [schema.core :as s]
-            [ratealot.item :refer :all]
-            [ratealot.review :refer :all]))
+            [ratealot.item :refer :all]))
 
-(def app
-  (api
+(defapi app
     {:swagger
-     {:ui "/doc"
-      :spec "/swagger.json"
-      :data {:info {:title "Ratealot"
-                    :description "Compojure Api for doing reviews and ratings. alot"}
-             :tags [{:name "api", :description "ratings api"}]}}}
+     {:info {:title "Ratealot Api"
+             :description "Compojure Api for doing ratings and reviews"}
+      :tags [{:name "api", :description "Find items and reviews by barcode"}]}}
 
     (context "/api" []
       :tags ["api"]
 
       (GET "/:barcode" []
-        :return {:result Item}
+        :return Item
         :query-params [barcode :- String]
         :summary "Gets a item by barcode"
-        (ok {:result (get-item barcode)})))))
+        (ok (get-item barcode)))))

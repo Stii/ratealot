@@ -17,7 +17,7 @@
   )
 
 (defn add! [new-item]
-  item (coerce! Item new-item))
+  (coerce! Item new-item))
 
-(when (empty? @item)
+(when (empty? @items)
   (add! {:barcode "abc123" :name "Camel Filter" :description "Toasted lekker cigs"}))
