@@ -12,14 +12,6 @@
 
 (def server1-conn {:pool {} :spec {}})
 (defmacro wcar* [& body] `(car/wcar server1-conn ~@body))
-(comment
-  ;; (wcar* (car/ping)) ; => "PONG" (1 command -> 1 reply)
-  
-  ;; (wcar*
-  ;;   (car/ping)
-  ;;   (car/set "foo" "bar")
-  ;;   (car/get "foo")) ; => ["PONG" "OK" "bar"] (3 commands -> 3 replies)
-  )
 
 (def make-item-key (partial str "items:"))
 (defn make-key-from-item [item]
@@ -35,7 +27,10 @@
         item-names (map name (keys Item) )
         item-value (wcar* (apply key-getter item-names))
         [barcode name description]  item-value ]
-    {:barcode barcode :name name :description description}))
+    (coerce! Item {:barcode barcode
+                   :name name
+                   :description description
+                   :reviews []})))
 
 (defn add! [new-item]
   (let [item (coerce! Item new-item)
@@ -50,11 +45,11 @@
     
 
 (comment 
-  (when (empty? @items)
+  (do
     (add! {:barcode "abc123" :name "Camel Filteragain" :description "Toasted lekker cigs" :reviews [] })
     (add! {:barcode "abc122" :name "Camel Filter STUFF" :description "Toasted lekker cigs" :reviews []})
     (add! {:barcode "abc125" :name "TEXAN" :description "Toasted lekker cigs ALSO sssYADAD" :reviews []}))
-  (get-item "abc125")
+   (get-item "abc125")
 (keys Item)
   
   )
