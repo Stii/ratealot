@@ -18,13 +18,7 @@
       :tags ["api"]
 
       (GET "/:barcode" []
-        :return {:result Long}
-        :query-params [x :- Long, y :- Long]
-        :summary "adds two numbers together"
-        (ok {:result (+ x y)}))
-
-      (POST "/echo" []
-        :return Pizza
-        :body [pizza Pizza]
-        :summary "echoes a Pizza"
-        (ok pizza)))))
+        :return {:result Item}
+        :query-params [barcode :- String]
+        :summary "Gets a item by barcode"
+        (ok {:result (get-item barcode)})))))
