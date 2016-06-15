@@ -38,6 +38,7 @@
   (let [key-getter (partial car/hmget review-key)
         item-vals (wcar* (apply key-getter (map name (keys Review))))
         [reviewer rating review date-added] item-vals]
+    (print ">>" rating)
     (coerce! Review {:reviewer reviewer 
                      :rating (Integer. rating) 
                      :review review 
