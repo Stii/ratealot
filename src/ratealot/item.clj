@@ -15,8 +15,6 @@
 ;;                   :aggregate Aggregate
                    })
 
-;; (def server1-conn {:pool {} :spec {}})
-;; (defmacro wcar* [& body] `(car/wcar server1-conn ~@body))
 
 (def make-item-key (partial str "item:"))
 
@@ -38,7 +36,6 @@
 (defn get-item
   "Get an item by barcode. If it doesn't exist, return nil"
   [barcode]
-  ;;(:barcode @items barcode))
   (let [item-key (make-item-key barcode)
         key-getter (partial car/hmget item-key)
         item-names (map name (keys Item) )

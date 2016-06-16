@@ -1,7 +1,7 @@
 (ns ratealot.review
   (:require [schema.core :as s]
             [ring.swagger.schema :refer [coerce!]]
-            [taoensso.carmine :as car :refer (wcar)]))
+            [taoensso.carmine :as car ]))
 
 
 (s/defschema Review {:reviewer String
@@ -11,7 +11,6 @@
 
 (def server1-conn {:pool {} :spec {}})
 (defmacro wcar* [& body] `(car/wcar server1-conn ~@body))
-
 (defn new-review-id []
   (wcar* (car/incr "new_review_id")))
 
