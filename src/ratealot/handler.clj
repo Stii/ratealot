@@ -38,5 +38,11 @@
            :return Aggregate
            :path-params [barcode :- String]
            :summary "Get the average rating for an item"
-           (ok (aggregate (get-reviews barcode))))))
+           (ok (aggregate (get-reviews barcode))))
+
+      (GET "/:barcode/reviews" []
+           :return [Review]
+           :path-params [barcode :- String]
+           :summary "Get reviews for an item by barcode"
+           (ok (get-reviews barcode)))))
 
